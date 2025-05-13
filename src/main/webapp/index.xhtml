@@ -1,0 +1,884 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>APSFC Application</title>
+    <style type="text/css">
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #DEF2F1;
+        }
+.top-navbar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white; /* Dark gray background */
+            padding: 10px 10px;
+        }
+
+        .top-navbar img {
+            height: 60px; /* Adjust as needed */
+        }
+
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background-color: #182628; /* Light gray background */
+            padding: 15px 10px;
+        }
+
+        .navbar a {
+            color: white; /* Dark gray text */
+            text-align: center;
+            padding: 8px 10px; /* Reduced padding */
+            text-decoration: none;
+            font-size: 20px; /* Increased font size */
+        }
+
+        .navbar a:hover {
+            background-color: #ddd; /* Hover background color */
+            color: #white; /* Ensured text color remains dark gray on hover */
+        }
+
+        .navbar .navbar-brand {
+            font-size: 22px; /* Increased font size */
+            font-weight: bold;
+            margin-right: 20px; /* Space between brand and links */
+            color: white;
+        }
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .navbar-links a {
+            margin-right: 15px; /* Added margin between links */
+            padding: 8px 10px; /* Reduced padding */
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            flex: 1; /* Take up available space */
+        }
+
+        li {
+            float: left;
+        }
+
+        li a, .dropbtn {
+            display: inline-block;
+            color: black; /* Changed to dark gray to match navbar text color */
+            text-align: center;
+            padding: 8px 10px; /* Reduced padding */
+            text-decoration: none;
+            font-size: 18px; /* Increased font size */
+        }
+
+        li a:hover, .dropdown:hover .dropbtn {
+            background-color: #ddd; /* Changed hover background color */
+        }
+
+        li.dropdown {
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            font-size: 18px; /* Increased font size */
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Style for the search bar */
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-left: auto; /* Pushes search bar to the right */
+        }
+
+        .search-container input[type=text] {
+            padding: 6px;
+            margin-right: 5px;
+            font-size: 17px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .search-container button {
+            padding: 6px 10px;
+            background: #333;
+            color: white;
+            font-size: 17px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background: #ddd;
+            color: black;
+        }
+    
+.slideshow-container {
+            height: 100vh;
+            position: relative;
+            margin: auto;
+            background-color: #f3f3f3;
+        }
+
+        .mySlides {
+            display: none;
+            height: 100vh;
+        }
+
+        .mySlides img {
+            height: 100vh;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        /* Fade animation */
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @keyframes fade {
+            from {opacity: .4} 
+            to {opacity: 1}
+        }
+
+        /* Dots */
+        .dot-container {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .dot {
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active {
+            background-color: #717171;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            min-height: 70vh; /* Ensures container takes up at least 80% of viewport height */
+        }
+
+        .card {
+            display: flex;
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%; /* Adjusted width to 100% */
+            max-width: 1200px; /* Increased max-width for responsiveness */
+            margin: 20px 0;
+        }
+
+        .card-info {
+            padding: 40px; /* Increased padding for more space */
+            background-color: #007bff;
+            color: #fff;
+            flex: 1;
+        }
+
+        .card-info h1 {
+            font-size: 32px; /* Increased font size */
+            margin-bottom: 20px;
+        }
+
+        .card-info p {
+            margin: 10px 0;
+        }
+
+        .card-info .button {
+            display: inline-block;
+            background-color: #ffc107;
+            color: #000;
+            padding: 12px 24px; /* Adjusted padding */
+            margin-top: 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .card-info .button:hover {
+            background-color: #e0a800;
+        }
+
+        .card-info .open {
+            display: flex;
+            align-items: center;
+        }
+
+        .card-info .open span {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+
+        .card-image {
+            background-color: #f9f9f9;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0; /* Remove padding */
+            position: relative; /* Make the container relative for positioning images */
+            overflow: hidden; /* Hide overflow for smooth animation */
+            height: 400px; /* Set a fixed height to control the animation area */
+        }
+
+        .card-image img {
+            position: absolute;
+            width: 100%;
+            height: 100%; /* Ensure image covers full container */
+            object-fit: cover; /* Ensures image covers the area properly */
+            animation: slide 10s infinite; /* Animation for sliding effect */
+        }
+
+        .card-image img:nth-child(2) {
+            animation-delay: 5s; /* Delay second image to create a sliding effect */
+        }
+
+        @keyframes slide {
+            0% { left: 0; }
+            50% { left: -100%; }
+            100% { left: 0; }
+        }
+
+        .enquiry-section {
+            background-color: #e3f2fd;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .enquiry-section h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .enquiry-section p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .enquiry-form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .enquiry-form input, .enquiry-form select {
+            width: calc(50% - 10px);
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .enquiry-form button {
+            background-color: #ffc107;
+            color: #000;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .enquiry-form button:hover {
+            background-color: #e0a800;
+        }
+        
+        .ratings-reviews-section {
+    background-color: #e3f2fd;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ratings-reviews-section h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.ratings-reviews-section p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.ratings-form {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ratings-form select, .ratings-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.ratings-form button {
+    background-color: #ffc107;
+    color: #000;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.ratings-form button:hover {
+    background-color: #e0a800;
+}
+
+.about-section {
+    background-color: #e3f2fd;
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.about-content {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 1000px;
+    text-align: center;
+}
+
+.about-content h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+.about-content p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.about-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detail {
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px 0;
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.detail h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.detail p {
+    font-size: 16px;
+    margin: 0;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    width: 100%;
+}
+
+p {
+    color: #666;
+    text-align: center;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.branches-container {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.branches {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Add some space between the branches */
+    transition: transform 0.5s ease-in-out;
+}
+
+.branch {
+    background-color: #e0f7fa;
+    border-radius: 8px;
+    padding: 20px;
+    min-width: 30%;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.branch h4 {
+    margin-top: 0;
+    color: #333;
+}
+
+.rating {
+    font-size: 1.2em;
+    color: #ffa000;
+}
+
+.stars {
+    color: #ffa000;
+}
+
+.time {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.status {
+    margin-left: 5px;
+}
+
+.closed {
+    color: red;
+}
+
+.open {
+    color: green;
+}
+
+.phone {
+    color: #333;
+}
+
+.nav-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.nav-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.nav-button:hover {
+    background-color: #0056b3;
+}
+
+
+       footer {
+            background-color: #343a40;
+            text-align: center;
+            padding: 20px 0;
+            position: relative; /* Changed from fixed to relative */
+            width: 100%;
+        }
+
+        .footer-links {
+            margin: 10px 0;
+        }
+
+        footer a {
+            display: inline-block;
+            color: #000;
+            text-decoration: none;
+            margin: 5px 10px;
+            padding: 5px 10px;
+            background-color: #d9d9d9;
+            border-radius: 5px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+            background-color: #bfbfbf;
+        }
+    </style>
+</head>
+<body>
+ <div class="top-navbar">
+    <img src="nav.jpg" alt="APSFC Logo" />
+</div>
+
+<ul class="navbar">
+    <li class="navbar-brand">APSFC</li>
+    <div class="navbar-links">
+        <li><a href="index.jsf">Home</a></li>
+        <li><a href="aboutus.jsf">About us</a></li>
+        <li><a href="contactus.html">Contact us</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Login</a>
+            <div class="dropdown-content">
+                <a href="#">Admin Login</a>
+                <a href="custlogin.jsp">Customer Login</a>
+                <a href="employeelogin.jsf">Employee Login</a>
+            </div>
+        </li>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Search.." name="search" />
+        <button type="submit">Search</button>
+    </div>
+</ul>
+
+    <div class="slideshow-container">
+        <div class="mySlides fade">
+            <img src="slide1.jpg" alt="Image 1"/>
+        </div>
+        <div class="mySlides fade">
+            <img src="slide.jpg" alt="Image 2"/>
+        </div>
+        <div class="mySlides fade">
+            <img src="slide3.jpg" alt="Image 3"/>
+        </div>
+        <!-- Add more slides as needed -->
+    </div>
+    <div style="text-align:center">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <!-- Add more dots as needed -->
+    </div>
+    <script type="text/javascript">
+        //<![CDATA[
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+            setTimeout(showSlides, 2000); // Change image every 2 seconds
+        }
+        //]]>
+    </script>
+
+<div class="container">
+    <div class="card">
+        <div class="card-info">
+            <h1>Andhra Pradesh FinCorp </h1>
+            <p><strong>Location:</strong> Guntur</p>
+            <p><strong>Address:</strong> TC 4/3843, Ground Floor, Vadeshwaram, Guntur, Andhra Pradesh - 520001</p>
+            <p><strong>Contact:</strong> +919289243819</p>
+            <div class="open">
+                <strong>Hours:</strong>
+                <span>9:30 AM - 5:00 PM</span>
+            </div>
+            <a href="#" class="button">Direction</a>
+            <a href="#" class="button">Get the App</a>
+        </div>
+        <div class="card-image">
+            <img src="fincorp1.jpg" alt="Promotional Material" />
+            <img src="fincorp2.jpg" alt="Promotional Material" />
+            <img src="fincorp3.jpg" alt="Promotional Material" />
+        </div>
+    </div>
+</div>
+
+    <div class="enquiry-section">
+        <h2>Enquiry Form</h2>
+        <p>For any questions or additional information, please fill out the form below:</p>
+        <div class="enquiry-form">
+            <input type="text" name="name" placeholder="Name"  />
+            <input type="email" name="email" placeholder="Email"  />
+            <input type="text" name="phone" placeholder="Phone" />
+            <select name="service">
+                <option value="">Select Service</option>
+                <option value="consulting">Consulting</option>
+                <option value="investment">Investment</option>
+                <option value="loan">Loan</option>
+            </select>
+            <input type="text" name="message" placeholder="Message" />
+            <button type="submit">Submit</button>
+        </div>
+    </div>
+    
+    <!-- Ratings and Reviews Section -->
+<div class="ratings-reviews-section">
+    <h2>Ratings and Reviews</h2>
+    <p>We value your feedback. Please rate our services and leave a review:</p>
+    <div class="ratings-form">
+        <label for="rating">Rating:</label>
+        <select id="rating" name="rating">
+            <option value="5">5 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="2">2 Stars</option>
+            <option value="1">1 Star</option>
+        </select>
+        <textarea name="review" rows="5" placeholder="Write your review here..."></textarea>
+        <button type="submit">Submit Review</button>
+    </div>
+</div>
+
+<!-- About Andhra Pradesh FinCorp Section -->
+<div class="about-section">
+    <div class="about-content">
+        <h2>About Andhra Pradesh FinCorp</h2>
+        <p>Andhra Pradesh FinCorp is a leading financial institution dedicated to providing quality financial services to the people of Andhra Pradesh. Our mission is to support the growth and development of the state through various financial products and services.</p>
+        <p>We offer a range of services including loans, investments, and consulting to meet the diverse needs of our clients. Our team of professionals is committed to delivering exceptional service and helping our clients achieve their financial goals.</p>
+        <div class="about-details">
+            <div class="detail">
+                <h3>Our Vision</h3>
+                <p>To be the most trusted and innovative financial partner, empowering individuals and businesses to achieve their financial aspirations.</p>
+            </div>
+            <div class="detail">
+                <h3>Our Values</h3>
+                <p>Integrity, Customer Focus, Excellence, Innovation, and Commitment to Community.</p>
+            </div>
+            <div class="detail">
+                <h3>Our History</h3>
+                <p>Founded in 1980, Andhra Pradesh FinCorp has been a pioneer in providing financial services tailored to the needs of the state’s residents and businesses. Over the years, we have expanded our services and continuously evolved to meet the changing financial landscape.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <script type="text/javascript">
+         //<![CDATA[
+        let currentIndex = 0;
+
+        function updateBranchStatus() {
+            var branches = document.getElementsByClassName('branch');
+            var currentTime = new Date();
+            var currentHour = currentTime.getHours();
+            var currentMinutes = currentTime.getMinutes();
+
+            for (var i = 0; i < branches.length; i++) {
+                var statusElement = branches[i].getElementsByClassName('status')[0];
+                if (currentHour >= 9 && (currentHour < 17 || (currentHour == 17 && currentMinutes == 0))) {
+                    statusElement.innerHTML = 'Open';
+                    statusElement.className = 'status open';
+                } else {
+                    statusElement.innerHTML = 'Closed';
+                    statusElement.className = 'status closed';
+                }
+            }
+        }
+
+        function showBranches() {
+            const branchWidth = document.querySelector('.branch').offsetWidth + 20;
+            const containerWidth = document.querySelector('.branches-container').offsetWidth;
+            const visibleBranches = Math.floor(containerWidth / branchWidth);
+
+            const branches = document.querySelector('.branches');
+            branches.style.transform = translateX(-${currentIndex * branchWidth}px);
+        }
+
+        function nextBranch() {
+            const branchWidth = document.querySelector('.branch').offsetWidth + 20;
+            const containerWidth = document.querySelector('.branches-container').offsetWidth;
+            const visibleBranches = Math.floor(containerWidth / branchWidth);
+            const branches = document.querySelectorAll('.branch').length;
+
+            currentIndex = Math.min(currentIndex + 1, branches - visibleBranches);
+            showBranches();
+        }
+
+        function prevBranch() {
+            currentIndex = Math.max(currentIndex - 1, 0);
+            showBranches();
+        }
+
+        window.onload = function() {
+            updateBranchStatus();
+            showBranches();
+        }
+
+        window.onresize = function() {
+            showBranches();
+        }
+        //]]>
+    </script>
+      <div class="container">
+        <h2>Nearby Branches</h2>
+        <p>Find Andhra Pradesh Fincorp Branch near <a href="#">Your Location</a></p>
+
+        <div class="branches-container">
+            <div class="branches">
+                <div class="branch">
+                    <h3>Andhra Pradesh Fincorp Gold Loan - Guntur</h3>
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                    </div>
+                    <p>Ground Floor, XYZ Complex, Main Road, Near Bus Stand, Guntur - 522002</p>
+                    <div class="time">
+                        <span>9:30 AM - 5:00 PM</span> 
+                        <span class="status open">Open</span>
+                    </div>
+                    <p class="phone">1234567890</p>
+                </div>
+                <div class="branch">
+                    <h3>Andhra Pradesh Fincorp Gold Loan - Vijayawada</h3>
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                    </div>
+                    <p>Ground Floor, ABC Building, Bandar Road, Near Benz Circle, Vijayawada - 520010</p>
+                    <div class="time">
+                        <span>9:30 AM - 5:00 PM</span> 
+                        <span class="status open">Open</span>
+                    </div>
+                    <p class="phone">0987654321</p>
+                </div>
+                <div class="branch">
+                    <h3>Andhra Pradesh Fincorp Gold Loan - Visakhapatnam</h3>
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                    </div>
+                    <p>Ground Floor, DEF Tower Road, Near R.K. Beach, Visakhapatnam - 530001</p>
+                    <div class="time">
+                        <span>9:30 AM - 5:00 PM</span> 
+                        <span class="status open">Open</span>
+                    </div>
+                    <p class="phone">1122334455</p>
+                </div>
+                <div class="branch">
+                    <h3>Andhra Pradesh Fincorp Gold Loan - Tirupati</h3>
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                    </div>
+                    <p>Ground Floor, GHI Building, Main Road, Near RTC Bus Stand, Tirupati - 517501</p>
+                    <div class="time">
+                        <span>9:30 AM - 5:00 PM</span> 
+                        <span class="status open">Open</span>
+                    </div>
+                    <p class="phone">2233445566</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="nav-button" id="previous">Previous</button>
+            <button class="nav-button" id="next">Next</button>
+        </div>
+    </div>
+
+
+   <footer>
+    <div class="footer-links">
+        <a href="/products-services">Products And Services</a>
+        <a href="/avail-loans">Avail Loans</a>
+        <a href="/loan-limit">Loan Limit</a>
+        <a href="/interest-rates">Interest Rates</a>
+        <a href="/thrust-areas">Thrust Areas</a>
+    </div>
+    <div class="footer-links">
+        <a href="/financial-results">Financial Results</a>
+        <a href="/ratings-of-bonds">Ratings of Bonds</a>
+        <a href="/trustee-details">Trustee Details</a>
+        <a href="/information-reports">Information and Reports</a>
+    </div>
+    <div class="footer-links">
+        <a href="/general-regulations">General Regulations</a>
+        <a href="/assets-possessed-sarfaesi">Assets possessed under SARFAESI Act</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/products-services-purchase-flow">Products / Services purchase flow</a>
+        <a href="/returns-refunds-cancellation-policy">Returns, Refunds and Cancellation Policy</a>
+        <a href="/terms-conditions-online-payments">Terms and Conditions for online payments</a>
+        <a href="/sitemap">Sitemap</a>
+    </div>
+    <p>© 2024 Andhra Pradesh State Finance Corporation. All rights reserved.</p>
+</footer>
+</body>
+</html>
